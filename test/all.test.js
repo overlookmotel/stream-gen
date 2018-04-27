@@ -105,9 +105,9 @@ describe('piped', function() {
 
 	describe('with 1KB data', function() {
 		function* gen() {
-		  for (let i = 0; i < 1000; i++) {
-		    yield i % 256;
-		  }
+			for (let i = 0; i < 1000; i++) {
+				yield i % 256;
+			}
 		}
 
 		runPipeTests(gen);
@@ -115,9 +115,9 @@ describe('piped', function() {
 
 	describe('with 1MB data', function() {
 		function* gen() {
-		  for (let i = 0; i < 1000 * 1000; i++) {
-		    yield i % 256;
-		  }
+			for (let i = 0; i < 1000 * 1000; i++) {
+				yield i % 256;
+			}
 		}
 
 		runPipeTests(gen);
@@ -125,9 +125,9 @@ describe('piped', function() {
 
 	describe('with 10MB data', function() {
 		function* gen() {
-		  for (let i = 0; i < 10 * 1000 * 1000; i++) {
-		    yield i % 256;
-		  }
+			for (let i = 0; i < 10 * 1000 * 1000; i++) {
+				yield i % 256;
+			}
 		}
 
 		runPipeTests(gen);
@@ -137,14 +137,14 @@ describe('piped', function() {
 function runPipeTests(gen) {
 	it('calls back with no error when piped directly', function(cb) {
 		const producer = new GeneratorReadStream(gen),
-		 	checker = new GeneratorWriteStream(gen, cb);
+			checker = new GeneratorWriteStream(gen, cb);
 
 		producer.pipe(checker);
 	});
 
 	it('calls back with no error when piped via passthrough', function(cb) {
 		const producer = new GeneratorReadStream(gen),
-		 	checker = new GeneratorWriteStream(gen, cb);
+			checker = new GeneratorWriteStream(gen, cb);
 
 		const passthrough = new PassThrough();
 
@@ -153,7 +153,7 @@ function runPipeTests(gen) {
 
 	it('calls back with no error when piped via zlib', function(cb) {
 		const producer = new GeneratorReadStream(gen),
-		 	checker = new GeneratorWriteStream(gen, cb);
+			checker = new GeneratorWriteStream(gen, cb);
 
 		const deflate = zlib.createDeflate(),
 			inflate = zlib.createInflate();

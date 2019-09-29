@@ -131,6 +131,20 @@ describe('piped', () => {
 
 		runPipeTests(gen);
 	});
+
+	describe('with 10MB data handcoded generator', () => {
+		function gen() {
+			let i = 0;
+			return {
+				next() {
+					if (i === 10 * 1000 * 1000) return {value: undefined, done: true};
+					return {value: i++ % 256, done: false};
+				}
+			};
+		}
+
+		runPipeTests(gen);
+	});
 });
 
 function runPipeTests(gen) {

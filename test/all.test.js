@@ -17,7 +17,6 @@ chai.config.includeStack = true;
 
 // Tests
 
-/* jshint expr: true */
 /* global describe, it */
 
 const { GeneratorReadStream, GeneratorWriteStream } = streamGen;

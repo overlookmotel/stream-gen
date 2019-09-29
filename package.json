@@ -15,11 +15,17 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@overlookmotel/eslint-config": "^4.3.2",
     "chai": "^4.2.0",
     "coveralls": "^3.0.6",
     "cross-env": "^6.0.0",
+    "eslint": "^6.5.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-eslint-comments": "^3.1.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.17.0",
+    "eslint-plugin-node": "^10.0.0",
     "istanbul": "^0.4.5",
-    "jshint": "^2.10.2",
     "mocha": "^6.2.1"
   },
   "keywords": [
@@ -32,8 +38,9 @@
     "writable"
   ],
   "scripts": {
-    "test": "npm run jshint && npm run test-main",
-    "jshint": "jshint lib test",
+    "test": "npm run lint && npm run test-main",
+    "lint": "eslint '*.js' '.*.js' '**/*.js' '**/.*.js'",
+    "lint-fix": "eslint '*.js' '.*.js' '**/*.js' '**/.*.js' --fix",
     "test-main": "mocha --check-leaks --colors -t 10000 -R spec \"test/**/*.test.js\"",
     "cover": "npm run cover-main && rm -rf coverage",
     "coveralls": "npm run cover-main && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",

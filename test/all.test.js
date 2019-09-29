@@ -10,7 +10,7 @@ const chai = require('chai'),
 	{expect} = chai,
 	{Readable, Writable, PassThrough} = require('stream'),
 	zlib = require('zlib'),
-	streamGen = require('../lib/');
+	streamGen = require('../index');
 
 // Init
 chai.config.includeStack = true;

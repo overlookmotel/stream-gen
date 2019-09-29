@@ -3,21 +3,16 @@
  * Tests
  * ------------------*/
 
+/* eslint-disable jest/no-test-callback */
+
 'use strict';
 
 // Modules
-const chai = require('chai'),
-	{expect} = chai,
-	{Readable, Writable, PassThrough} = require('stream'),
+const {Readable, Writable, PassThrough} = require('stream'),
 	zlib = require('zlib'),
 	streamGen = require('../index');
 
-// Init
-chai.config.includeStack = true;
-
 // Tests
-
-/* global describe, it */
 
 const {GeneratorReadStream, GeneratorWriteStream} = streamGen;
 
@@ -28,28 +23,29 @@ function* genLetters() {
 	}
 }
 
-describe('GeneratorReadStream', () => {
+describe('GeneratorReadStream', () => { // eslint-disable-line jest/lowercase-name
 	it('is subclass of Readable Stream', () => {
 		const s = new GeneratorReadStream(genLetters);
-		expect(s).to.be.instanceof(Readable);
+		expect(s).toBeInstanceOf(Readable);
 	});
 
 	it('produces expected data', () => {
 		const s = new GeneratorReadStream(genLetters);
 
 		let res = s.read();
-		expect(res.toString()).to.equal('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+		expect(res.toString()).toBe('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
 		res = s.read();
-		expect(res).to.be.null; // eslint-disable-line no-unused-expressions
+		expect(res).toBeNull();
 	});
 });
 
-describe('GeneratorWriteStream', () => {
+describe('GeneratorWriteStream', () => { // eslint-disable-line jest/lowercase-name
 	it('is subclass of Writable Stream', () => {
 		const s = new GeneratorWriteStream(genLetters);
-		expect(s).to.be.instanceof(Writable);
+		expect(s).toBeInstanceOf(Writable);
 	});
 
+	// eslint-disable-next-line jest/expect-expect
 	it('calls back with no error if streamed data correct', (cb) => {
 		const s = new GeneratorWriteStream(genLetters, cb);
 
@@ -61,8 +57,8 @@ describe('GeneratorWriteStream', () => {
 		const str = 'ABCDEFGHIJKLMNOPQRSTUVWXY';
 
 		const s = new GeneratorWriteStream(genLetters, (err) => {
-			expect(err).to.be.instanceof(Error);
-			expect(err.message).to.equal(`Not enough data - ended prematurely at ${str.length}`);
+			expect(err).toBeInstanceOf(Error);
+			expect(err.message).toBe(`Not enough data - ended prematurely at ${str.length}`);
 			cb();
 		});
 
@@ -74,8 +70,8 @@ describe('GeneratorWriteStream', () => {
 		const str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ-';
 
 		const s = new GeneratorWriteStream(genLetters, (err) => {
-			expect(err).to.be.instanceof(Error);
-			expect(err.message).to.equal(`Too much data - expected ${LENGTH}, got at least ${str.length}`);
+			expect(err).toBeInstanceOf(Error);
+			expect(err.message).toBe(`Too much data - expected ${LENGTH}, got at least ${str.length}`);
 			cb();
 		});
 
@@ -87,8 +83,8 @@ describe('GeneratorWriteStream', () => {
 		const str = 'ABCDEFGHIJKL-NOPQRSTUVWXYZ';
 
 		const s = new GeneratorWriteStream(genLetters, (err) => {
-			expect(err).to.be.instanceof(Error);
-			expect(err.message).to.match(/^Wrong data - differed in byte range \d+-\d+$/);
+			expect(err).toBeInstanceOf(Error);
+			expect(err.message).toMatch(/^Wrong data - differed in byte range \d+-\d+$/);
 			cb();
 		});
 
@@ -148,6 +144,7 @@ describe('piped', () => {
 });
 
 function runPipeTests(gen) {
+	// eslint-disable-next-line jest/expect-expect
 	it('calls back with no error when piped directly', (cb) => {
 		const producer = new GeneratorReadStream(gen),
 			checker = new GeneratorWriteStream(gen, cb);
@@ -155,6 +152,7 @@ function runPipeTests(gen) {
 		producer.pipe(checker);
 	});
 
+	// eslint-disable-next-line jest/expect-expect
 	it('calls back with no error when piped via passthrough', (cb) => {
 		const producer = new GeneratorReadStream(gen),
 			checker = new GeneratorWriteStream(gen, cb);
@@ -164,6 +162,7 @@ function runPipeTests(gen) {
 		producer.pipe(passthrough).pipe(checker);
 	});
 
+	// eslint-disable-next-line jest/expect-expect
 	it('calls back with no error when piped via zlib', (cb) => {
 		const producer = new GeneratorReadStream(gen),
 			checker = new GeneratorWriteStream(gen, cb);

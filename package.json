@@ -16,7 +16,7 @@
   "dependencies": {},
   "devDependencies": {
     "@overlookmotel/eslint-config": "^4.3.2",
-    "chai": "^4.2.0",
+    "@overlookmotel/eslint-config-jest": "^2.1.0",
     "coveralls": "^3.0.6",
     "cross-env": "^6.0.0",
     "eslint": "^6.5.0",
@@ -25,8 +25,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^22.17.0",
     "eslint-plugin-node": "^10.0.0",
-    "istanbul": "^0.4.5",
-    "mocha": "^6.2.1"
+    "jest": "^24.9.0"
   },
   "keywords": [
     "stream",
@@ -41,10 +40,10 @@
     "test": "npm run lint && npm run test-main",
     "lint": "eslint '*.js' '.*.js' '**/*.js' '**/.*.js'",
     "lint-fix": "eslint '*.js' '.*.js' '**/*.js' '**/.*.js' --fix",
-    "test-main": "mocha --check-leaks --colors -t 10000 -R spec \"test/**/*.test.js\"",
+    "test-main": "cross-env NODE_ENV=production jest",
     "cover": "npm run cover-main && rm -rf coverage",
     "coveralls": "npm run cover-main && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
-    "cover-main": "cross-env COVERAGE=true istanbul cover _mocha --report lcovonly -- -t 10000 -R spec \"test/**/*.test.js\"",
+    "cover-main": "cross-env COVERAGE=true NODE_ENV=production jest --coverage",
     "ci": "if [ $COVERAGE ]; then npm run coveralls; else npm test; fi"
   },
   "engines": {

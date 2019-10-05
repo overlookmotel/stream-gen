@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.1
+
+Doc:
+
+* README update
+* Update year in license
+
 ## 2.0.0
 
 Breaking changes:

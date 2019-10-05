@@ -57,6 +57,8 @@ const producer = new GeneratorReadStream( gen );
 producer.pipe( destination );
 ```
 
+You can also use a generator which produces 2-byte or 4-byte values (i.e. 16 bit or 32 bit) using `options.byte`.
+
 #### GeneratorWriteStream( gen [, options], callback )
 
 Writable stream that receives content and compares them to result of a generator. It calls `callback` with result of the comparison.
@@ -120,15 +122,37 @@ There we go! We tested ZLIB on 100MB of data, using hardly any memory and no dis
 
 ### Options
 
-#### GeneratorReadStream
+#### `bytes`
 
-Options `highWaterMark` and `encoding` are passed to Node's `Readable` Stream constructor.
+To use a generator which outputs 16 bit or 32 bit numbers rather than 8 bit, set `options.bytes` to `2` or `4`.
+
+Default is `1` (i.e. 8 bit).
+
+```js
+function* gen() {
+	for (let i = 0; i < 100 * 1024 * 1024; i++) {
+		yield i % (256 * 256);
+	}
+}
+
+const stream = new GeneratorReadStream( gen, { bytes: 2 } );
+```
+
+#### `maxSize` (read stream only)
 
 `maxSize` option determines largest size chunk stream will emit.
 
-#### GeneratorWriteStream
+```js
+const stream = new GeneratorReadStream( gen, { maxSize: 1024 } );
+```
 
-Options `highWaterMark` and `emitClose` are passed to Node's `Writable` Stream constructor.
+#### `highWaterMark`
+
+Passed to Node's Stream constructor.
+
+#### `encoding`
+
+Passed to Node's Stream constructor.
 
 ## Tests
 

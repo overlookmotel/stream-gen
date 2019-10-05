@@ -61,7 +61,7 @@ You can also use a generator which produces 2-byte or 4-byte values (i.e. 16 bit
 
 #### GeneratorWriteStream( gen [, options], callback )
 
-Writable stream that receives content and compares them to result of a generator. It calls `callback` with result of the comparison.
+Writable stream that receives content and compares it to result of a generator. It calls `callback` with result of the comparison.
 
 The generator must be of same type as for `GeneratorReadStream`.
 
@@ -80,7 +80,7 @@ source.pipe( checker );
 
 The two parts work together to test that a transfer of data has been completed without altering the data.
 
-Let's say you are testing a lossless compression component.
+Let's say you are testing a lossless compression component:
 
 ```
 Input -> Compress -> Decompress -> Output
